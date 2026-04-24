@@ -25,3 +25,15 @@ jobs:
       - name: Run tests
         run: |
           pytest
+
+      # 👇 NEW STEP (important)
+      - name: Build Docker Image
+        run: |
+          docker build -t property-service .
+
+      # 👇 OPTIONAL (advanced validation)
+      - name: Run Container Check
+        run: |
+          docker run -d -p 8000:8000 property-service
+          sleep 5
+          curl http://localhost:8000/health
